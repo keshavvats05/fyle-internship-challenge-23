@@ -1,34 +1,11 @@
-# Fyle Frontend Challenge
-
-## Who is this for?
-
-This challenge is meant for candidates who wish to intern at Fyle and work with our engineering team. The candidate should be able to commit to at least 6 months of dedicated time for internship.
-
-## Why work at Fyle?
-
-Fyle is a fast-growing Expense Management SaaS product. We are ~40 strong engineering team at the moment. 
-
-We are an extremely transparent organization. Check out our [careers page](https://careers.fylehq.com) that will give you a glimpse of what it is like to work at Fyle. Also, check out our Glassdoor reviews [here](https://www.glassdoor.co.in/Reviews/Fyle-Reviews-E1723235.htm). You can read stories from our teammates [here](https://stories.fylehq.com).
-
-## Challenge outline
-
-This challenge involves implementing application using github api. 
-
-The services that you need to use are already implemented - check out ApiService.
-
-You can see details of this challenge [here](https://fyleuniverse.notion.site/fyleuniverse/Fyle-Frontend-development-challenge-cb5085e5e0864e769e7b98c694400aaa)
-
-__Note__ - This challenge is in angular. We work on angular frameworks & after you join we expect the same from you. Hence it is required to complete this assignement in angular itself.
-
-## What happens next?
-
-You will hear back within 48 hours from us via email.
+# Github user details
+This is a single-page angular app that allows user to enter the GitHub username and the it extracts the user data using Github API.
+This app has paginations that allow users to navigate from one page to another, by default each page contains 5 repositories.
+# Error handling
+when the user enters an invalid username, this app catches the error message thrown by GitHub API and displays that the username is not found!
+There are certain limits to using the GitHub API if the user exceeds the limit, the API requests will fail and the user need to wait until they are allowed to make API requests again
 
 ## Installation
-
-1. Fork this repository to your github account.
-2. Clone the forked repository and proceed with steps mentioned below.
-
 ### Install requirements
 * Install angular cli [Ref](https://angular.io/cli)
 * `npm install` in this repository 
