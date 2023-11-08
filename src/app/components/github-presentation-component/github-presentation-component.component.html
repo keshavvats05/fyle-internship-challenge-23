@@ -1,0 +1,95 @@
+<div class="container mt-4">
+  <div class="input-group mb-3">
+    <form class="flex justify-center items-center mx-auto" [formGroup]="postForm" (ngSubmit)="onSubmit()">
+      <input type="text" class="form-control" 
+      placeholder="Enter gitHub username..." 
+      style="border-color: #007bff;border-top-right-radius: 0;border-bottom-right-radius: 0;"
+      formControlName="userName"
+      >
+      <div class="input-group-append">
+        <button class="btn btn-outline-primary" type="submit" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container-fluid mx-auto m-3">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+    <div class="col-span-1">
+      <ngx-skeleton-loader appearance="circle" [count]="1" class="larger-spinner" [theme]="{
+        'width': '200px',
+        'height': '200px'
+      }" *ngIf="getUserLoadingStatus === 'loading'"></ngx-skeleton-loader>
+
+      <img [src]="userData?.avatar_url" class="rounded-full" width="200px" height="200px" alt="user" *ngIf="getUserLoadingStatus === 'loaded'">
+    </div>
+    <div class="col-span-2">
+      <ngx-skeleton-loader appearance="line" [count]="4" *ngIf="getUserLoadingStatus === 'loading'" [theme]="{
+        'width': '40vw'
+      }"></ngx-skeleton-loader>
+      <div *ngIf="getUserLoadingStatus === 'loaded'">
+        <h1 class="mb-2">{{userData?.name}}</h1>
+        <h5 class="mb-2">{{userData?.bio ? userData.bio : 'bio not available!'}}</h5>
+        <h5 class="d-flex mb-2">
+          <i class="bi bi-geo-alt"></i>
+          {{userData?.location ? userData.location : 'location not available'}}
+        </h5>
+        <h5 class="mb-2">{{userData?.twitter_username ? userData.twitter_username : 'twitter_username not available!'}}</h5>
+      </div>
+    </div>
+  </div>
+
+  <ngx-skeleton-loader appearance="line" [count]="1" *ngIf="getUserLoadingStatus === 'loading'" [theme]="{
+    'width': '40vw'
+  }"></ngx-skeleton-loader>
+
+  <h5 *ngIf="getUserLoadingStatus === 'loaded'">
+    <i class="bi bi-link-45deg mr-1"></i>
+    <a href="{{userData?.html_url}}" target="_blank">{{userData?.html_url}}</a>
+  </h5>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4" *ngIf="getRepoLoadingStatus === 'loaded'">
+    <div class="col-span-1" *ngFor="let repo of repos">
+      <div class="card flex flex-col h-full">
+        <div class="card-body flex flex-col justify-between">
+          <h1 class="mb-2 text-blue-500">{{repo?.name}}</h1>
+          <h5 class="mb-2">{{repo?.description ? repo.description : 'description not available!'}}</h5>
+          <div>
+            <div class="flex space-x-2" *ngIf="repo.languages?.length > 0">
+              <span *ngFor="let language of repo.languages" class="badge badge-primary">{{language}}</span>
+            </div>
+            <span *ngIf="repo.languages?.length === 0">languages not available!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ngx-skeleton-loader class="flex gap-4" [count]="2" [theme]="{'height': '25vh'}" *ngIf="getRepoLoadingStatus === 'loading'"></ngx-skeleton-loader>
+</div>
+<div class="pagination-container relative bottom-0 left-1/2 transform -translate-x-1/2" *ngIf="getRepoLoadingStatus === 'loaded'">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination pagination-lg justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="onPageChange(currentPage - 1)" tabindex="-1">Previous</a>
+      </li>
+      <li class="page-item" *ngFor="let page of [1, 2, 3]">
+        <a class="page-link" (click)="onPageChange(page)">{{page}}</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" (click)="onPageChange(currentPage + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div class="backdrop" *ngIf="getUserLoadingStatus === 'error'" (click)="onClose()">
+  <div class="alert-box" style="background: url(../../../../assets/Pattern0.png) no-repeat, #F8F8FD;
+  background-position: 100%;">
+      <p class="title">{{errorMessage}}</p>
+    
+      <div class="alert-box-action">
+          <button class="btn btn-primary" (click)="onClose()">Close</button>
+      </div>
+  </div>
