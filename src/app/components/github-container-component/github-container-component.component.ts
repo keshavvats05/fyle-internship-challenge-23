@@ -48,6 +48,9 @@ export class GithubContainerComponentComponent implements OnInit {
     currentPage: number;
     perPage: number;
   }) {
+    console.log(userName)
+    console.log(currentPage)
+    console.log(perPage)
     this.getRepoLoadingStatus = 'loading';
     this.apiService
       .getRepoDetails(userName, currentPage, perPage)

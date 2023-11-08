@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { repoDetails } from 'src/app/Interfaces/repoDetails';
 import { userData } from 'src/app/Interfaces/userData';
@@ -13,7 +21,7 @@ export class GithubPresentationComponentComponent implements OnInit {
   @Input() repos!: repoDetails[];
   @Input() getUserLoadingStatus!: string;
   @Input() getRepoLoadingStatus!: string;
-  @Input() errorMessage!: string
+  @Input() errorMessage!: string;
   postForm!: FormGroup;
   @Output() getUserData = new EventEmitter<any>();
   @Output() getPaginatedRepos = new EventEmitter<{
@@ -50,8 +58,9 @@ export class GithubPresentationComponentComponent implements OnInit {
     }
   }
   onSubmit() {
-    if (this.postForm.invalid){
-      return
+    this.currentPage = 1;
+    if (this.postForm.invalid) {
+      return;
     }
     this.getUserData.emit(this.postForm.value.userName);
     this.getPaginatedRepos.emit({
@@ -59,9 +68,8 @@ export class GithubPresentationComponentComponent implements OnInit {
       currentPage: this.currentPage,
       perPage: this.perPage,
     });
-    this.postForm.reset()
   }
-  onClose(){
-    this.getUserLoadingStatus = ''
-    }
+  onClose() {
+    this.getUserLoadingStatus = '';
+  }
 }
